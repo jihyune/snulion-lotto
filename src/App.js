@@ -3,6 +3,9 @@ import { useConnect, useAccount } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { disconnect } from "@wagmi/core";
 import { useFaucet } from "./hooks/faucet";
+import { useEnter } from "./hooks/enter";
+import { useApprove } from "./hooks/approve";
+
 function App() {
   const reward = 10;
   const participants = ["lsjfdlakfs", "asfjlasjdfl", "alsfjlsjd"];
@@ -16,6 +19,17 @@ function App() {
   };
 
   const { write: faucet } = useFaucet();
+  const { write: enter } = useEnter();
+  const { write: approve, allowance } = useApprove();
+
+  const handleEnter = () => {
+    if (!allowance) {
+      approve();
+      return;
+    }
+    enter();
+  };
+
   return (
     <div className="App">
       <div>
@@ -35,7 +49,7 @@ function App() {
         </div>
       </div>
 
-      <button>Enter</button>
+      <button onClick={handleEnter}>Enter</button>
 
       <div>
         <div>Participants</div>
