@@ -1,7 +1,14 @@
 import "./App.css";
-import { useConnect, useAccount } from "wagmi";
+import {
+  useConnect,
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+} from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { disconnect } from "@wagmi/core";
+import { TOKEN_CONTRACT_ADDRESS } from "./constant";
+import { TOKEN_ABI } from "./abi/token";
 
 function App() {
   const reward = 10;
@@ -14,10 +21,19 @@ function App() {
   const handleConnect = () => {
     isConnected ? disconnect() : connect();
   };
+  const { config } = usePrepareContractWrite({
+    address: TOKEN_CONTRACT_ADDRESS,
+    abi: TOKEN_ABI,
+    functionName: "faucet",
+  });
+  const { write } = useContractWrite(config);
 
   return (
     <div className="App">
       <div>
+        <button className="button" onClick={() => write()}>
+          Faucet
+        </button>
         <button className="button" onClick={handleConnect}>
           {isConnected
             ? address.slice(0, 4) + "..." + address.slice(-4)
