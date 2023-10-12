@@ -1,15 +1,8 @@
 import "./App.css";
-import {
-  useConnect,
-  useAccount,
-  useContractWrite,
-  usePrepareContractWrite,
-} from "wagmi";
+import { useConnect, useAccount } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { disconnect } from "@wagmi/core";
-import { TOKEN_CONTRACT_ADDRESS } from "./constant";
-import { TOKEN_ABI } from "./abi/token";
-
+import { useFaucet } from "./hooks/faucet";
 function App() {
   const reward = 10;
   const participants = ["lsjfdlakfs", "asfjlasjdfl", "alsfjlsjd"];
@@ -21,17 +14,12 @@ function App() {
   const handleConnect = () => {
     isConnected ? disconnect() : connect();
   };
-  const { config } = usePrepareContractWrite({
-    address: TOKEN_CONTRACT_ADDRESS,
-    abi: TOKEN_ABI,
-    functionName: "faucet",
-  });
-  const { write } = useContractWrite(config);
 
+  const { write: faucet } = useFaucet();
   return (
     <div className="App">
       <div>
-        <button className="button" onClick={() => write()}>
+        <button className="button" onClick={() => faucet()}>
           Faucet
         </button>
         <button className="button" onClick={handleConnect}>
