@@ -1,6 +1,7 @@
 import "./App.css";
-import { useConnect } from "wagmi";
+import { useConnect, useAccount } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
+import { disconnect } from "@wagmi/core";
 
 function App() {
   const reward = 10;
@@ -9,12 +10,18 @@ function App() {
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
+  const { address, isConnected } = useAccount();
+  const handleConnect = () => {
+    isConnected ? disconnect() : connect();
+  };
 
   return (
     <div className="App">
       <div>
-        <button className="button" onClick={() => connect()}>
-          Connect Wallet
+        <button className="button" onClick={handleConnect}>
+          {isConnected
+            ? address.slice(0, 4) + "..." + address.slice(-4)
+            : "Connect Wallet"}
         </button>
       </div>
       <div>
