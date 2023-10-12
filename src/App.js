@@ -1,22 +1,28 @@
 import "./App.css";
 
 function App() {
+  const reward = 10;
+  const participants = ["lsjfdlakfs", "asfjlasjdfl", "alsfjlsjd"];
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <button className="button">Connect Wallet</button>
+      </div>
+      <div>
+        <div className="title">Jack Pot ! {reward} LION 🪙</div>
+        <div className="sub-title">
+          Congraturations! You are the winner! claim {reward} LION!
+        </div>
+      </div>
 
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button>Enter</button>
+
+      <div>
+        <div>Participants</div>
+        {participants.map((participant) => {
+          return <div>{participant}</div>;
+        })}
+      </div>
     </div>
   );
 }
