@@ -38,21 +38,40 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        <button className="button" onClick={() => faucet()}>
-          Faucet
-        </button>
+      <div className="wallet">
         <button className="button" onClick={handleConnect}>
           {isConnected
             ? address.slice(0, 4) + "..." + address.slice(-4)
             : "Connect Wallet"}
         </button>
       </div>
+
+      <div className="flex items-center justify-center gap-2 py-10">
+        <button className="small-button" onClick={() => faucet()}>
+          Faucet
+        </button>
+
+        <a
+          className="underline block"
+          href={`https://sepolia.etherscan.io/address/${TOKEN_CONTRACT_ADDRESS}`}
+        >
+          token scanner
+        </a>
+        <a
+          className="underline"
+          href={`https://sepolia.etherscan.io/address/${LOTTO_CONTRACT_ADDRESS}`}
+        >
+          lotto scanner
+        </a>
+      </div>
+
       <div>
         <div className="title">Jack Pot ! {reward} LION 🪙</div>
       </div>
 
-      <button onClick={handleEnter}>Enter</button>
+      <button className="button" onClick={handleEnter}>
+        Enter
+      </button>
     </div>
   );
 }
