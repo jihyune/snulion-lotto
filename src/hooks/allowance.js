@@ -11,6 +11,7 @@ export const useAllowance = () => {
     abi: TOKEN_ABI,
     functionName: "allowance",
     args: [walletAddress, LOTTO_CONTRACT_ADDRESS],
+    staleTime: 10 * 60 * 1000,
   });
 
   return data;
